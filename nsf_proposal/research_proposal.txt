@@ -1,0 +1,90 @@
+    Title: Enabling rural Internet service providers in the developing world 
+    Keywords: Network management, challenged networks, software-defined networking
+    Background: Internet connectivity yields immense economic and societal benefits.# Yet currently over 70% of the world, including 30% of the U.S. population lives without Internet, primarily in rural areas [2]. In this proposal I sketch a research plan to surmount two related obstacles along the path towards worldwide Internet connectivity: the high degree of technical expertise required to run a network, and the prohibitive resource constraints of rural network deployments. 
+    In general, there exists little economic incentive to deploy networks in rural areas: rural populations have slight buying power, and incumbent ISPs focus on higher margin markets to maximize profits. Local entrepreneurs would be ideal deployers of networks, as they are trusted by their community and motivated to obtain connectivity. Yet managing networks is a highly technical task, requiring at the least knowledge of router  configuration languages, traffic engineering practices, and monitoring infrastructure. Such skills are scarce in developing regions, and the few people with expertise move to large cities where they are able to earn high wages. Therefore a significant impediment to network deployment is the high degree of technical expertise required to run network.
+    A second obstacle is the resource constrained nature of rural networks. Many rural networks utilize long-distance wireless devices, which are low-bandwidth, high-latency, and failure-prone. Network control mechanisms in these conditions are necessarily complex, which consequently increases the level of requisite technical expertise.
+      Proposal: To what extent can management of resource-constrained networks be outsourced or automated? If succesfull, my proposed research will demonstrate that by providing new monitoring and fault-tolerance mechanisms on top of an emerging technology, software-defined networking (SDN), the task of deploying and maintaining networks can be reduced to simply installing and pointing antennas.
+      In short, SDN simplifies network management by executing complex control software on logically centralized servers, such that routers merely forward packets. In the context of rural networks, SDN would allow local entrepreneurs to outsource management of their network to third-party controllers. The SDN platform alone is not sufficient to achieve our goal however; new monitoring and fault-tolerance mechanisms are required to support this model.
+    Research Plan: I will begin by identifying the set of monitoring and diagnosis mechanisms necessary to support remote management. Outsourcing is not possible otherwise, since third-party operators do not have physical access to the network.
+    Fault diagnosis in software-defined networks is currently an open problem, in part because the abstractions provided to control software hide the underlying details of network behavior. My initial plan is to identify failure modes specific to SDN, collect data on hardware faults in rural networks, and use these data to guide and evaluate the design of a framework for remotely diagnosing hardware and software faults. Existing work on verifying network invariants [3] and analyzing SDN control applications [4] may suffice to diagnosis software faults in control code, but the inherent semantic distance between control software and underlying network device behavior makes it difficult to diagnosis bugs or faults outside of the controller. It is especially important to provide high-fidelity diagnosis information for hardware faults, since it is ultimately the local entrepreneur who must be given instructions on how to repair the problem. I propose to do X, Y and Z to get around this. TODO: engage diagnosing faults in small-scale networks [5]
+    Next, while SDN provides an opportunity to simplify network management, it also presents a challenge: SDN controllers assume highly reliable communication channels between network devices, which will certainly not exist in challenged networks. Thus, part of my work will involve re-thinking how control servers communicate with the network such that the network can continue to function in the presence of unreliable, high-latency control channels. Delay tolerant networking techniques are a promising avenue, but they don’t suffice for some reason. Second, hierarchical control topologies have already been used to achieve fault-tolerance for distributed filesystems in developing regions [7]. Applying these topologies to network controllers will require a reexamination of the design constraints discussed therein. yeah.
+    Intellectual Merit: Outsourced network management would be valuable for many networks, not just rural deployments. If successful, the approach outlined here will represent a significant step forward in the areas of network management and fault diagnosis. In addition, there is essentially no previous work on deploying SDN in challenged network environments. Challenged networks push SDN to its limits with to its ability to function in the face of unreliable control channels. Indeed it may even turn out that logically centralized control is not feasible in such environments. In either case, this work will undoubtedly provide the networking community with valuable insights into the limits of the SDN paradigm. 
+    Broader Impact: By simplifying network management, my work will enable local entrepreneurs to deploy networks where they were not previously able, catalyzing Internet coverage and the many benefits that come with it. These benefits are especially important for rural areas, where some of poorest, most underserved populations in the world subside. More directly, I will educate potential adopters in developing regions on the specific benefits of this approach and those of the broader Internet. Lastly, I plan to communicate my experiences to the wide public through blogging, teaching, and publications.
+References:
+[1] (infodev.org:the_wireless_opportunity).
+[2] http://www.internetworldstats.com/stats.htm
+[3] Mai et al., Debugging the data plane with Anteater, SIGCOMM ‘11
+[4] Canini et al., Automating the testing of Openflow applications, Rigorous Protocol Testing ‘11
+[5] Kandula et. al, Detailed diagnosis in enterprise networks, SIGCOMM ‘09
+[6] Demmer et al, DTLSR: Delay Tolerant Networking for Developing Regions, NSDR ‘07
+[7] Demmer et al, TierStore: distributed filesystem for challenged networks in developing regions, FAST ‘08
+
+
+
+===========
+   I believe the answer to my question lies in an emerging technology known as Software-defined Networking (SDN). 
+
+t’s not at all clear that SDN will suffice to achieve complete automation of management. In particular, our goal pushes SDN to its limits along two dimensions: first, while SDN simplifies the implementation of network management tasks, it nonetheless assumes a fairly high level of technical skills, and second, wide-area rural network deployment presents considerable reliablility and performance challenges not encountered in the tightly-coupled datacenter networks which were the original focus of SDN research. I address these issues in turn below.
+
+
+
+
+=====================================================================
+I believe that SDN has the potential to make deploying a rural network as easy as plugging in a home router.
+
+
+-     // Virtual circuits (VCs) would allow a decoupling of /network connectivity/
+    //  from /network services/. Entrepreneurs could simply deploy access links.
+     //  Customers would be given a /choice/ of which ISP in the city to buy Internet
+     //  connectivity from; their traffic would then be transported transparently
+     //  through a VC on the access link. The ISP would then handle the complex network
+     //  services, and pay the entrepreneur for access to the customers.
+
+       // VCs also provide QOS guarantees, performance isolation, and
+       // security isolation between customers sharing the network.       
+
+=====
+TODO:
+  - enumerate expected results of research?
+  - How does this fit into the broader fields of networking and ICTD? Is this
+    work `transformative'?
+  - Inject and italicize specific keywords from the prompt, + keywords describing proposal
+ - Statement attesting to originality of proposal?
+  - Diagrams?
+ - Mention that I have access to excellent resources: Eric Brewer and Scott Shenker’s are excellent resources that I have access to?
+ - Point out something that’s counter-intuitive
+
+
+
+-- Advice: --
+• Present a decidable hypothesis or answerable
+question
+• Give the big picture – why is this question
+important
+• Cite what is known in the field and how your
+work will expand what is known
+• Be sure it reflects your own thinking & work
+• Demonstrate your understanding of research
+principles
+Use references to support your proposal.  
+• Don’t promise something you cannot deliver.
+• It is OK to use the same words as are used in
+the instructions.  
+• Make sure your proposal is internally
+consistent – no contradictions and no
+ambiguities.
+• Be clear, concise, original
+• Think of your proposed research as a proof-of-concept that you can find a good question
+and design a feasible plan to answer that
+question.
+• You are writing a proposal, not a contract.
+• The reviewers are funding you (the way you
+think, what you’ve achieved, your
+motivation, your preparation, your potential,
+…)
+* Take out every “very,”
+“pretty,” “actually,” in your
+narrative.
+* Avoid phrases like:  It is obvious. It is apparent.  As previously stated
+* Computer Scientists are tool makers
+ - SDN makes it easy to automate management -- now the problem is how we should go about automating it

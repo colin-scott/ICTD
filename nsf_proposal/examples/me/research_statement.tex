@@ -1,0 +1,221 @@
+\documentclass[12pt]{article}	% if curious, google for different types of document classes
+				% a resume class also exists and makes for a nice-looking resume
+
+\usepackage[top=1in,right=1in,left=1in,bottom=1in]{geometry}
+\pagestyle{empty} 		% use if page numbers not wanted
+\usepackage{verbatim}
+
+\newenvironment{packed_enum}{
+\begin{enumerate}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}{\end{enumerate}}
+
+%%%% Beginning of the Document %%%%
+\begin{document}
+
+\begin{center}
+{ \bf Previous Research Experience } 
+\end{center}
+
+% Dave's page:
+%While the Internet has been described as on the of the greatest engineering
+%successes in modern history, it is not without its limitations. One of its
+%greatest strengths is its simple, decentralized design that enables the
+%Internet to grow to reach nearly every corner of the globe. This design is
+%also the reason that there is no built-in way to measure Internet growth – to
+%the extent that researchers cannot even generate a complete map of today's
+%Internet. 
+
+% Reverse Traceroute page:
+%Network operators use it to help identify routing failures, path inflation,
+%and router misconfigurations. Researchers use it to map the Internet, predict
+%performance, geolocate routers, and classify the performance of ISPs
+
+Since my first quarter in the computer science department I've participated in
+Networks research, led by Professors Tom Anderson and Arvind Krishnamurthy.
+During my time here I've made several contributions to the reverse traceroute
+project.
+
+\noindent {\small \bf Motivation \& Background } \\
+\indent traceroute is a network measurement tool used by both operators and
+researchers for gaining information about the path
+packets take to get to a given destination. This information is used for a
+wide range of applications, including network failure isolation, path
+inflation debugging, geolocation, misconfiguration diagnosis, topology
+discovery and performance prediction.
+
+Although traceroute is extremely useful, it only provides the user with
+half the picture, since Internet routing is generally asymmetric. Our reverse traceroute
+system aims to complete that picture by revealing the return path
+used by a destination without requiring its control.
+
+% scalability is needed, because a wide range applications could make use of
+% Reverse Traceroute.
+
+% Two themes and one principle:
+% * making the system sufficiently reliable to allow for a wide range of
+% use-cases
+% * investigating the use of reverse traceroute
+% * you reasoned about how internet routing works to address the scalability
+%  issue
+
+In short, reverse traceroute works by piecing together measurements issued by a set of
+distributed vantage points. In cases where vantage points other than the
+source are well-positioned, we utilize source-spoofing to ensure that probes
+travel along the desired return path.
+
+\noindent {\small \bf Proximity Prediction} \\
+\indent We cannot simply have all of our vantages points spoof probes
+at the same time in the hope that one will be close enough to yield reverse
+hops. This is because many destinations rate-limit after only a few consecutive probes,
+implying that probes sent from in-range vantage points may be dropped.
+Furthermore, sending large amounts of probes to each hop would be extremely
+prohibitive in situations where frequent or large scale reverse path
+measurements are required.
+% - in addition to rate-limiting, it is also a scalability issue - if they
+%   rate limit and we can only send slowly, it would take forever without
+%   orderings.  and, even if it didn't, we can't send 50 probes to every
+%   router if we want to make lots of measurements - too many probes.
+% can't send probes sequentially, since that would take way too long
+
+To overcome this issue, I hypothesized that
+vantage points close to known targets should also be close
+to unknown targets in the same prefix, since routing is generally
+prefix-based. To evaluate this intuition, I built a
+system which regularly generates a ``map'' of the Internet by issuing 
+probes from all vantage points to selected targets. Using the
+resulting data, the system generates an ordering of vantage points which are
+most likely to yield reverse hops for any
+given prefix. Generating an ordering which covers the widest possible area of
+a prefix using the minimum number of vantage points is an instance of the well-known
+% "an entire prefix" -> make it clearer that you aren't probing ALL, you are
+% probing a random subset and trying to cover that.  if probing all, we
+% wouldn't need set cover - we'd have exact order for every IP.
+set cover optimization problem. Using the standard greedy algorithm, I was able to show that   
+in the median case a single vantage point can be used to cover 95\% of the
+addresses in a prefix. Reverse traceroute uses these predictions to choose the
+optimal vantage points for issuing probes, cutting down significantly on measurement
+and time overhead for requests and greatly
+increasing the scalability and practicality of our tool overall. The
+articulation and evaluation of this piece of our system was my main
+contribution to our recent NSDI publication [1]. 
+% as far as we know, this is the first system for predicting vantage point
+% proximity to arbitrary targets, a technique which might prove useful for
+% several other measurement systems
+
+% continually maps the Internet for accuracy
+
+%  Reducing overhead turns the system into something that can be used for
+%  on-demand troubleshooting (reducing how long a measurement takes) and for
+%  Internet-scale measurements (reducing # of probes required)
+
+%When you did a particular study, what were
+%the interesting findings? How did that change our understanding of the
+%Internet/topology/routers/whatever? What did this work enable that was
+%both needed and never before done? What key challenges did you
+%overcome?
+
+%With spoofed RR, only nearby spoofers can find reverse
+%hops, since each packet includes only 9 slots. Because
+%many routers rate limit after only a few probes, we can-
+%not send from many vantage points at once, in the hopes
+%that one will prove close enough – the router might drop
+%the probes from the VPs within range. Our goal is to de-
+%termine which VPs are likely to be near a router before
+%we probe it. Because Internet routing is generally based
+%on the destination’s prefix, a VP close to one address in
+%a prefix is likely close to other addresses in the prefix.
+%Each day, we harvest the set of router IP addresses
+%seen in the Internet atlas gathered by iPlane on the pre-
+%vious day and supplement the set with a recent list of
+%pingable addresses [17]. Each day, every VP issues a
+%record route ping to every address in the set. For each ad-
+%dress, we determine the set of VPs that were near enough
+%to discover reverse hops. We use this information in two
+%ways during a reverse traceroute. First, if we encounter
+%one of the probed addresses, we know the nearest VP to
+%use. Second, if we encounter a new address, the offline
+%probes provide a hint: the group of VPs within range of
+%some address in the same prefix. Selecting the minimal
+%number of vantage points to use from this group is an in-
+%stance of the well known set cover optimization problem.
+%We use the standard greedy algorithm to decide which
+%VPs to use for a prefix, ordered by the number of addi-
+%tional addresses they cover within the prefix.
+%For a representative day, Figure 7 shows the coverage
+%we achieve at given numbers of VPs per prefix. Our sys-
+%tem determines the covering VPs for all prefixes, but the
+%graph only includes prefixes for which we probed at least
+%15 addresses, as it is trivial to cover small prefixes. We
+%see that, for most prefixes, we only need a small number
+%of VPs. For example, in the median case, a single VP
+%suffices for over 95% of addresses in the prefix, and we
+%rarely need more than 4 VPs to cover the entire prefix.
+
+\noindent {\small \bf Topology Discovery} \\
+\indent Having used my understanding of routing to help bring the reverse traceroute
+system into a usable state, I began investigating 
+applications which would directly benefit from reverse path information.
+Internet topology discovery is one such application. Traditional topology
+discovery involves issuing exhaustive forward traceroutes between distributed vantage
+points in order to infer network structure. Because forward traces only
+provide a partial view of existing paths, I was able to use
+reverse traceroute to uncover 9096 inter-domain peering links that were
+completely invisible to traditional probing methods.
+
+\noindent {\small \bf Network Failure Isolation} \\
+\indent Another research domain enabled by reverse path information is network
+failure isolation. Previous measurement studies [2][3] have shown  
+that long-lasting network outages are surprisingly common, often partial (only
+affecting certain vantage points), and uni-directional (disrupting the forward
+or reverse path, but not both). Using these findings as motivation, I
+recently developed a distributed version of traceroute which uses
+source-spoofing to ensure that probes only traverse the forward path between a
+source and a destination. As part of ongoing research I am using this tool in combination with reverse
+traceroute to show that the direction and location of network failures can be
+isolated with much greater precision than traditional tools allow. Part of
+this investigation involves testing my proposed techniques on real network
+outages and comparing the results with traditional isolation approaches. Therefore I am
+also developing a system for detecting and reacting to network outages in
+real-time.
+
+This work directly benefits network operators and enables further research into root cause analysis and
+automated remediation.
+
+\noindent {\small \bf Communicating Results} \\
+\indent During a summer internship at Amazon Web Service's content
+distribution network I quickly realized that my team members would benefit
+from familiarity with both the information gained and techniques used by reverse traceroute. Consequently, I
+organized a brownbag seminar where I presented an overview of our system and made arguments for
+how the team might put it to use.
+
+During the last quarter I have also participated in a weekly meeting with other
+undergraduate researchers to discuss the various problems we are currently
+working on. These meetings provide excellent practice in both explaining our
+research to others and arguing for its importance. In addition, the meetings
+allow us to share ideas and experiences relevant to our research.
+
+%At least in your research statement, you might want to connect the failure work to the 
+%broader context.  It is based on what we learned in Hubble: many failures are long lasting
+%(so aren't getting fixed automatically, need tools), partial (so tools that require a VP with
+%' a working path are valid), and unidirectional (so need visibility into both paths, AND likely
+%means there is a working physical policy-compliant path)
+
+% Then, I think the 2nd theme, which we're just getting into, is that now we
+% have a system that (while still improving) is capable of making real
+% measurements, so it is time to use it to build systems based on it and
+% learn about the network.
+\noindent{\small \bf References}
+\begin{packed_enum}
+\item {\small E. Katz-Bassett, H. Madhyastha, V. Adhikari, C. Scott, J.
+Sherry, P. van Wesep, A. Krishnamurthy, T. Anderson, ``Reverse traceroute'',
+{\em NSDI} 2010 }
+\item {\small M. Zhang and C. Zhang and V. Pai and L. Peterson and R. Wang, ``PlanetSeer: Internet Path Failure Monitoring
+    and Characterization in Wide-Area Services'', {\em OSDI} 2008 }
+\item { \small E. Katz-Bassett and H. V. Madhyastha and J. P. John and A. Krishnamurthy
+       and D. Wetherall and T. Anderson, ``Studying Black Holes in the Internet with Hubble'',
+{\em NSDI} 2008 }
+\end{packed_enum}
+\end{document}

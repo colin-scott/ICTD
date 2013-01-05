@@ -1,0 +1,43 @@
+* I've been living at the wrong layer of abstraction. Argumentation is far more
+* important than implementation.
+
+* Writing that NSF application made me want to go out and write a top-notch
+* research proposal. That proposal was terrible. I know I can do better.
+
+* Attitude determines /everything/.
+
+* I wasn't driven by enjoyment. I was /so/ passive. I just sat in my little
+* logical tower above the clouds. Enjoyment, sadness, disatisfaction,
+* annoyance. Those were all just passive events that I was observing. Being
+* driven by enjoyment is very imporant. That's where creativity comes from.
+
+* I'm a better scientist than I am an engineer.
+
+* I wanted to go to graduate school because I admired academics. That's not a
+* particularly good reason. A much better motive would be "I really enjoy
+* thinking about these problems. I want to discover new properties of the
+* Internet." Of course, I do enjoy thinking about these problems. But that was
+* secondary. My motivation was almost entirely driven by the fact that I
+* wanted to be like someone else.
+
+* I never really had vision. My awareness was /extremely/ constricted to
+* whichever particular problem I was working on at the moment. I didn't ever
+* step back and ask myself, "how does this fit into the bigger picture"
+* To be succesful, you have to have vision. You have to think to yourself,  "What should the Internet look
+like? How should we design things? What are the important problems? How should
+we go about solving them?"
+
+* In a similar vein, I spend /way/ too much time in the office. The NSF
+* panelists are looking for someone who wants to give back to society, who is a
+* /leader/. I'm fairly oblivious to those sorts of things. And they're
+* important things. -- I have a strong desire to TA.
+
+* I want to defer a year. I don't think I can write a convincing application
+* letter, because I haven't yet convinced /myself/ why I want to do it.  I haven't had enough time to step back and ask myself
+* "Why am I doing this"? I need to develop a passion for /research/, and grow
+* out of my simple desire to be like the academics. I haven't had enough time to think about the
+* meaning of research impact. I need to think more about
+* what /specifically/ I want to work on. Up until now, it's just been "I like
+* building distributed systems. Also, I'm good at this". But I haven't given
+* much thought into /why/ I like building distributed systems. Why is it
+* /important/. Why is /research/ better than engineering?

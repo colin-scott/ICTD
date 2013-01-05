@@ -1,0 +1,42 @@
+    My research career has focused on developing tools and techniques for troubleshooting networks. As an undergraduate I worked on measuring and diagnosing problems in the wide-area Internet, under the supervision of Professors Tom Anderson and Arvind Krishnamurthy at the University of Washington. My current interests at UC Berkeley are in making individual networks more robust, through the emerging paradigm of software-defined networking. Two principles have guided me throughout all of these endeavors: I concentrate my efforts in areas where my work will have meaningful impact on my community and the world at large, and I constantly seek out new experiences and skills that will help me become a more effective researcher. 
+    Background and motivation: The current Internet was not designed with measurement and fault-diagnosis in mind; it provides limited primitives for troubleshooting problems, and leaves network operators with little ability to avoid or repair faults outside of their own network.
+    Reverse traceroute: traceroute is the first tool network operators use when a problem occurs, as it provides visibility into the path packets traverse to arrive at a given destination. While this information is highly valuable, it only provides half the picture, since Internet routing is generally asymmetric. The first research project I participated in, known as reverse traceroute, aimed to complete that picture by revealing the return path used by arbitrary destinations.
+    My experiences with reverse traceroute have shaped my thinking in many ways. When I started on the project, I struggled to write simple programs. By the end I had obtained the skills necessary to understand and build large-scale distributed systems, and learned a great deal about the research process along the way. During this time I was able to make several research contributions, including a novel probing technique which improved reverse traceorute’s measurement completion time substantially, thereby bringing reverse traceroute from a proof-of-concept to a practically useful system. My contributions to reverse traceroute helped lead to a best paper in NSDI 2010 [1], honorable mention for the CRA outstanding undergraduate researcher award, as well as the Gary Kildall departmental scholarship.
+    CloudFront: During the following summer, I was able to apply my knowledge of Internet measurement in an industrial setting as an intern at CloudFront, Amazon Web Service’s content distribution network (CDN). CDNs exist to shorten the distance between users and the content they are interested in, thereby minimizing latency and decreasing traffic over expensive long-distance network links. Leveraging my knowledge of Internet behavior, I began by developing tools to aggregate, analyze, and trigger alarms for anomalous latency data, which served to help operators troubleshoot performance problems with their network. My internship culminated in a system to measure, prioritize and suggest fixes for circuitous routes between CloudFront and client networks, which proved to be useful for my fellow network operators.
+    My team members at CloudFront taught me two immensely valuable skills. First and foremost, they showed me the importance of guiding your work based on feedback from the people who are ultimately going to benefit from it. Second, they taught me the importance of collaborating with others in order to generate ideas and identify important problems. During my internship I also had the opportunity to give my first talk, after realizing that the CloudFront team would benefit from learning and using the reverse traceroute system I had helped build at UW.
+    Wide Area Fault Isolation: Upon returning to school I set out on my senior thesis topic, 
+which focused on isolating and avoiding routing faults in the Internet. I began by studying the prevalence of Internet outages with an experiment measuring ping losses between EC2 and large Internet service providers. This showed me that long-lasting outages are surprisingly common; I  discovered more than 1,200 outages over the period of two months. More interestingly, I found that 80% of the outages were partial, suggesting that alternate, unused routes existed.
+     With this as motivation, I began developing techniques to isolate the faults which are the cause of such outages. Traditional tools such as traceroute provide insufficient information for this purpose, since are blind to the direction of failure. By leveraging distributed measurements, novel measurement tools such as spoofed forward traceroute, a continually updated historical path atlas, reverse path information from reverse traceroute, and a new algorithm to analyze these data, I was able to show that wide-area network faults can be isolated much more accurately than traditional tools allow. This work was awarded best senior thesis award for the class of 2011 [2]. It also formed a crucial component in our recent HotNets 2011 publication [3], as well as our more extensive NSDI 2012 submission [4].
+     More than any of my previous experiences, this taught me to be an independent researcher. I was the leader throughout the entire process, from formulating a research question, developing experiments to study the problem, creating novel solutions, to ultimately communicating my results. The most difficult part of this process for me was the realization that giving talks is hard!
+     Current and Future Research: The main insight I took away from my previous research is that the Internet is incredibly complex, and thus fundamentally difficult to manage and troubleshoot. At UC Berkeley I am now exploring ways to make the Internet more robust from within the network, by leveraging an emerging technology known as software-defined networking (SDN). This has given me an in-depth understanding of the potential benefits and shortcomings of SDN, and ultimately helped lead me to the realization that it can enable local entrepreneurs in the developing world, as described in the attached research proposal.
+    Intellectual Merit: My previous experiences have given me the skills necessary to lead my own research agenda. Most importantly, I am still growing, and now have a good sense of the skills needed to improve my effectiveness as a research. My achievements show that I am capable of making intellectual and practical contributions to the networks community.
+    Broader impact: A common theme throughout my research has been an intentional decision to work on problems that are well-motivated and important to the communities around me. For example, reverse path information is highly valuable to network operators, and one company has even implemented reverse traceroute for their own operations. More recently, I have begun thinking about technology to enable to Internet connectivity in the developing world, which would be valuable to billions of under-privileged people. To ensure that my work has impact, I have strived to communicate my results through both writing and speaking. 
+
+References:
+[1] E. Katz-Bassett, H. Madhyastha, V. Adhikari, C. Scott, et. al. Reverse Traceroute, NSDI 2010
+[2] C. Scott, LIFEGUARD, Senior Thesis, 2011, http://www.eecs.berkeley.edu/~rcs/writeup.pdf
+[3] E. Katz-Bassett, D. Choffnes, C. Scott, et al., Machiavellian Routing, Hotnets 2011
+[4] E.Katz-Basset, C.Scott, et. al, Improving Internet Availability with LIFEGUARD, in submission.
+=====================================================================
+TODO:
+   - How did these experiences lead me to the realization of my research
+     proposal? (Or rather, how did these experiences lead me to the realization
+     of technical contributions of Yahel's problem?)
+ - Distinguish between ugrad + grad research
+ - Describe my specific role in the past research
+ - Emphasize my ability to work in a team as well as independantly!
+ 
+
+Advice:
+• Describe any previous research activities
+– Explain our specific role in the research; did you
+work independently or as part of a team
+– Discuss what you learned from your research (how
+to plan & conduct, work independently or as part
+of a team, learn interpret & communicate results –
+elaborate on this)
+– Separate undergraduate from graduate research
+– If you haven’t done research, describe activities
+that prepared you to undertake research, e.g.
+projects and internships
+– List any publications or presentations

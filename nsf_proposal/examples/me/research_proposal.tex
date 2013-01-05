@@ -1,0 +1,184 @@
+\documentclass[12pt]{article}	% if curious, google for different types of document classes
+				% a resume class also exists and makes for a nice-looking resume
+\usepackage[top=1in,right=1in,left=1in,bottom=1in]{geometry}
+\pagestyle{empty} 		% use if page numbers not wanted
+\usepackage{verbatim}
+
+\newenvironment{packed_enum}{
+\begin{enumerate}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}{\end{enumerate}}
+
+%%%% Beginning of the Document %%%%
+\begin{document}
+
+\begin{center}
+{\bf Proposed Plan of Research } 
+\end{center}
+
+\noindent{\bf Title}: Towards a negotiation framework for improving interdomain routing  \\
+\noindent{\bf Keywords}: protocol design, Internet measurement, interdomain routing
+
+{\em I propose to investigate extensions to the border gateway protocol (BGP)
+for facilitating negotiation of optimal and mutually beneficial routes between
+ autonomous systems (ASes). This work would impact nearly every application that
+makes use of the Internet. }
+
+\noindent{\bf Background} \\
+\indent The Internet plays a central role in our society. We use it for
+communication, business transactions, education, entertainment, news, and
+much more. Given our reliance on the Internet, it is crucial to ensure that network
+connections have both high reliability and low latency. For some
+applications, the reliability and performance of network connections is absolutely necessary.
+For example, consider a doctor's use of the Internet for remotely diagnosing and
+treating clients, or the military's need for real-time coordination of
+resources.
+
+Somewhat surprisingly, routes on the Internet are often highly inefficient
+[1]. This is partly due to the fact that the Internet is controlled by many
+independent organizations all acting in their own self-interest; although
+these organizations must ultimately cooperate to achieve their goals, they
+often make conflicting policy decisions which hurt the efficiency and
+stability of the overall system.
+
+To take a concrete example, consider a content provider, say Netflix, and a
+distant stub AS forwarding requests towards Netflix's prefix. From
+Netflix's perspective, optimizing latency is highly important. However, it may be the
+case that the stub AS is using a circuitous route to forward traffic, perhaps
+because they prefer routes advertised by their cheapest provider, or because
+their border router is misconfigured. In this case, Netflix has very little control
+over the routes chosen by the stub AS, even though a mutually beneficial
+alternative may exist.
+
+%Misconfigurations are particularly compelling
+%since it is clearly in both ASes interest to use different routes.
+There are three key issues involved: first, it is
+difficult for network operators to infer which routes other ASes are
+using, or whether they have alternative path available to them. Second, once
+an operator has identified a problem, they lack straightforward methods of affecting the routes used
+by of other ASes, especially those which are not directly adjacent. Current
+practice involves the use of ad-hoc techniques such as AS prepending to
+induce a change in route preference. These techniques are generally both coarse-grained
+and unpredictable. If they do not prevail, operators may be forced to contact the
+perpetrating AS directly. Third, reaching mutually beneficial routing
+arrangements requires the sharing of potentially sensitive or propietery information
+between ASes; ASes hide information that might give others a
+competitive advantage, such as business relationships or traffic costs, but at
+the same time they may need to share some amount of information in order to improve
+network performance or reliability.
+
+These issues partly stem from properties of BGP, the protocol used for negotiating inter-domain routes.
+In particular, BGP i.) only allows exchange of routing
+information with directly adjacent neighbors, and ii.) only facilitates sharing
+of a single ``preferred'' route for any given prefix, even though alternate paths may
+be available.
+
+\noindent{\bf Proposed Research} \\
+% afflicted with many problems, such as persistent oscillation, forwarding
+% loops, slow convergence, and network partitions.
+% I became aware of this problem during a summer internship at Amazon Web Services' content distribution
+% network. 
+\indent I propose to investigate extensions to BGP that would allow network
+operators to reach mutually beneficial routing configurations with other
+ASes in a general and straightforward way. My research will explore three
+unsolved problems in this area: limited visibility, non-adjacent negotiation, and
+performance negotiation.
+
+MIRO [3] explores the possibility of multi-path interdomain routing: in
+addition to existing BGP-learned routes, arbitrary pairs of ASes can negotiate further
+alternate paths for certain traffic flows. One issue which is not addressed by MIRO is
+that global AS topology is generally not known; in order to achieve their objectives,
+operators first need know which ASes to negotiate with. Part of my work
+will address the common case where operators have only partial visibility into the AS
+topology. In order to hide business relationships and other propietery
+information, I will evaluate recursive route negotiations -- delegating a request
+to a neighbor -- and flooding protocols.
+
+How will the negotiations be carried out? Given that ASes are in competition, the negotiation mechanism must ensure that
+outcomes are mutually beneficial and that no unwanted information is leaked. Previous research [2]
+investigated a framework for joint negotiation of BGP-learned routes between directly adjacent ASes by exposing only coarse,
+opaque preferences. Can this approach be generalized to allow for negotiation between non-adjacent ASes? Because intermediate ASes are involved, a new
+incentive model is required.
+
+Because ASes often attempt to optimize performance, automated negotiation with
+performance quantifiers would be extremely valuable. For example, an AS could
+send a message saying "Does anyone have a route with X latency
+to AS B"?. Neither MIRO nor Nexit explore this
+possibility. A pricing and bidding mechanism would be required to incentivize
+ASes to participate. If an AS wants to optimize end-to-end performance,
+multiple ASes would have to participate in the bidding. Lastly, a verification
+mechanism would be required to ensure that the paths in fact yielded the
+performance solicited.
+%This framework must  A key insight is that
+%BGP could allow for negotiation of routes between non-adjacent
+%ASes by using a ``virtual peering'' mechanism.
+%None of the proposed extensions to BGP have been successfully deployed. To ensure
+%broad impact, my research will focus on ensuring a low
+%barrier to widespread adoption. To begin, the proposed extensions must be
+%backwards-compatible and incremental, such that any two ASes can start utilizing the extensions
+%without support from intermediate ASes.
+%
+%Content distribution networks and providers completely rely on the
+%Internet for the business, and thus have huge incentives for improving the
+%performance and reliability of interdomain routes. Exploring the
+%revenue opportunities for solving issues affecting these stake-holders is a
+%promising avenue for ensuring adoption. 
+
+%ASes to maintain arbitrary routing policies, and should not require
+%ASes to expose unwanted information. 
+
+\noindent{\bf Intellectual Merit:} Negotiating mutually beneficial routes between
+ASes with competing interests is fundamentally challenging.
+
+\noindent{\bf Broader Impact:} The performance and reliability of the Internet is
+crucial. Providing a general framework for negotiating
+interdomain routing greatly improves the overall quality of the
+Internet and every application that runs on top of it.
+
+\noindent{\bf Apologies:} I apologize for the quality of this proposal.
+% Anticipated results.
+% A statement attesting to the originality of the research proposal.
+% Do I understand the relavent principles and techniques?
+%I will use a measurement-based approach to evaluating the proposed protocol extensions;
+%it is only by having a deep understanding of what the problems are to begin
+%with that we can hope to have a chance of providing a permanent solution for them.
+%\noindent{\bf Related Work} \\
+%\indent Consensus routing is a proposed extension to BGP designed to eliminate
+%transient routing loops, blackholes, and other problems caused by BGP
+%convergence effects.
+%
+%Wiser is a framework for negotiating routing policies between adjacent ASes.
+%
+%How is my work different (better than) these approaches?
+% backup paths, ratul's wiser stuff, brighten godfrey's various proposals.
+%"Make sure to introduce the problem well, why it is important - motivate it well and
+% at a high level.  Talk about why it is hard, some of the details on why it hasn't
+% been solved.  Talk about your planned approach and why it is different / has a chance
+% of working.  It is proposed, so you should not have all the details yet, but should
+% have a framework.  Then, talk about how you will evaluate it and know if you succeeded.
+%  Then perhaps close with the impact it will have.  You don't need to cite tons of
+% related work in detail, but distill some of it down to show that you understand what's
+% been done and what hasn't."
+% Identification of /critical/ issues.
+% \noindent{\bf Intellectual Merit}:
+% \noindent{\bf Broader Impact}:
+
+\noindent{\bf References}: 
+\begin{packed_enum}
+\item R. Krishnan, H.V. Madhyastha, S. Jain, S. Srinivasan, A.
+Krishnamurthy, T. Anderson, J. Gao, ``Moving Beyond End-to-End Path
+Information to Optimize CDN Performance'', IMC 2009
+\item R. Mahajan, D. Wetherall, T. Anderson, ``Negotiation Based Routing
+Between Neighboring Domains'', NSDI 2005
+\item W. Xu, J. Rexford, ``MIRO: multi-path interdomain routing'', SIGCOMM
+2006
+%\item J. John, E. Katz-Bassett, A. Krishnamurthy, T. Anderson, A.
+%Venkataramani, ``Consensus Routing: The Internet as a Distributed System'',
+%NSDI 2008
+%\item B. Quoitin, O. Bonaventure, ``A Cooperative Approach to
+%Interdomain Traffic Engineering'', NGI, 2005
+\end{packed_enum}
+
+\end{document}
